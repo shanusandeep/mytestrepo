@@ -4,6 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 bat 'java --version'
+                bat 'echo "Steps in order always->changed->success->unstable->failure"'
             }
         }
     }
