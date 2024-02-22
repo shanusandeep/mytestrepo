@@ -18,23 +18,26 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                parallel(
-                    chrome: {
-                        bat 'echo running E2E tests on chrome'
-                    },
-                    firefox: {
-                        bat 'echo running E2E tests on firefox'
-                    },
-                    safari: {
-                        bat 'echo running E2E tests on safari'
-                    },
-                )
                 bat 'echo Deploying build'
             }
         }
         stage('Regression tests') {
-            steps {
-                bat 'echo Running E2E tests'
+            parallel {
+                stage ('chrome') {
+                    steps {
+                        bat 'echo Running E2E tests on chrome'
+                    }
+                }
+                stage ('firefox') {
+                    steps {
+                        bat 'echo Running E2E tests on firefox'
+                    }
+                }
+                stage ('safari') {
+                    steps {
+                        bat 'echo Running E2E tests on safari'
+                    }
+                }
             }
         }
         stage('Release to prod') {
